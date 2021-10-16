@@ -1,0 +1,70 @@
+{
+  "name": "@swappy-so/swap-kit",
+  "version": "0.0.1",
+  "description": "Swap modal for Solana dApps.",
+  "homepage": "https://github.com/swappy-so/swap-kit#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swappy-so/swap-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/swappy-so/swap-kit#issues"
+  },
+  "scripts": {
+    "docs": "typedoc --excludePrivate --out ./docs src/index.tsx --includeVersion --readme none",
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@project-serum/serum": "^0.13.60",
+    "@reach/dialog": "^0.16.0",
+    "@reach/listbox": "^0.16.1",
+    "@reach/popover": "^0.16.0",
+    "@react-hook/media-query": "^1.1.1",
+    "@solana/spl-token": "^0.1.8",
+    "@swappy-so/swap": "^0.0.1",
+    "bn.js": "^5.2.0",
+    "buffer-layout": "^1.2.2",
+    "classnames": "^2.3.1",
+    "polished": "^4.1.3",
+    "react-device-detect": "^2.0.1",
+    "react-icons": "^4.3.1",
+    "react-spring": "^9.3.0",
+    "react-use-gesture": "^9.1.3",
+    "unstated-next": "^1.1.0"
+  },
+  "devDependencies": {
+    "@project-serum/anchor": "^0.16.2",
+    "@saberhq/use-solana": "^1.3.15",
+    "@solana/spl-token-registry": "^0.2.275",
+    "@solana/web3.js": "^1.29.2",
+    "@types/react": "^17.0.27",
+    "@types/react-dom": "^17.0.9",
+    "buffer-layout": "^1.2.2",
+    "react": "^17.0.2",
+    "react-async-hook": "^4.0.0",
+    "react-dom": "^17.0.2",
+    "typedoc": "^0.22.5"
+  },
+  "peerDependencies": {
+    "@project-serum/anchor": "^0.16.2",
+    "@saberhq/use-solana": "^1.3.5",
+    "@solana/web3.js": "^1.29.2",
+    "@types/react": "^17.0.19",
+    "@types/react-dom": "^17.0.9",
+    "react": "^17.0.2",
+    "react-async-hook": "^4.0.0",
+    "react-dom": "^17.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "@swappy-so/swap-kit",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Swap modal for Solana dApps.",
+  "homepage": "https://github.com/swappy-so/swap-kit#readme",
+  "license": "Apache-2.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "lerna run build",
+    "lint": "eslint --cache .",
+    "lint:ci": "eslint --cache . --max-warnings=0",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@saberhq/eslint-config-react": "^1.3.15",
+    "eslint": "^7.32.0",
+    "eslint-plugin-unused-imports": "^1.1.5",
+    "husky": "^7.0.2",
+    "lerna": "^4.0.0",
+    "lint-staged": "^11.2.2",
+    "prettier": "^2.4.1",
+    "typescript": "^4.4.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --cache --fix",
+    "*.{js,json,jsx,html,css,md}": "prettier --write"
+  }
+}
