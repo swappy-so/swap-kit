@@ -4,7 +4,7 @@ import { useAsync } from "react-async-hook";
 
 import { DEX_PID } from "../../../constants";
 import { _MARKET_CACHE } from "../common/cache";
-import { useDex } from "./../provider";
+import { useDex } from "../provider";
 
 // Lazy load a given market.
 export function useMarket(market?: PublicKey): Market | undefined {

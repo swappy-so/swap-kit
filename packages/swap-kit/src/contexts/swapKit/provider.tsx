@@ -1,23 +1,22 @@
 import type { UseSolanaArgs } from "@saberhq/use-solana";
 import { Swap as SwapClient } from "@swappy-so/swap";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext } from "react";
 
-import {
-  DexProvider,
-  SwapModal,
-  SwapProvider,
-  TokenListProvider,
-  TokenProvider,
-} from "../..";
+import { DexProvider } from "..";
+import { ModalsProvider } from "../modals";
 import type { UseSwapArgs } from "../swap";
+import { SwapProvider } from "../swap";
 import type { UseTokenArgs } from "../token";
+import { TokenProvider } from "../token";
 import type { UseTokenListArgs } from "../tokenList";
+import { TokenListProvider } from "../tokenList";
+import { Providers } from "./providers";
+
+export const SwapKitContext = React.createContext<UseSwapKit | null>(null);
 
 export interface UseSwapKit {
   openSwapModal: () => void;
 }
-
-const SwapKitContext = React.createContext<UseSwapKit | null>(null);
 
 export interface UseSwapKitArgs {}
 
@@ -40,35 +39,28 @@ export const SwapKitProvider: React.FC<Props> = ({
   referral,
   children,
 }: Props) => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
-
-  const context = useMemo(() => {
-    return { openSwapModal: () => setIsOpen(true) };
-  }, []);
-
   const swapClient = new SwapClient(provider, tokenList);
 
   return (
-    <SwapKitContext.Provider value={context}>
-      <TokenListProvider initialState={{ tokenList }}>
-        <TokenProvider initialState={{ provider }}>
-          <DexProvider initialState={{ swapClient }}>
-            <SwapProvider
-              initialState={{
-                fromMint,
-                toMint,
-                fromAmount,
-                toAmount,
-                referral,
-              }}
-            >
-              <SwapModal isOpen={isOpen} onDismiss={() => setIsOpen(false)} />
-              {children}
-            </SwapProvider>
-          </DexProvider>
-        </TokenProvider>
-      </TokenListProvider>
-    </SwapKitContext.Provider>
+    <TokenListProvider initialState={{ tokenList }}>
+      <TokenProvider initialState={{ provider }}>
+        <DexProvider initialState={{ swapClient }}>
+          <SwapProvider
+            initialState={{
+              fromMint,
+              toMint,
+              fromAmount,
+              toAmount,
+              referral,
+            }}
+          >
+            <ModalsProvider>
+              <Providers>{children}</Providers>
+            </ModalsProvider>
+          </SwapProvider>
+        </DexProvider>
+      </TokenProvider>
+    </TokenListProvider>
   );
 };
 
@@ -78,7 +70,7 @@ export const SwapKitProvider: React.FC<Props> = ({
 export const useSwapKit = (): UseSwapKit => {
   const context = useContext(SwapKitContext);
   if (!context) {
-    throw new Error("Not in WalletConnector context");
+    throw new Error("Not in SwapKitProvider context");
   }
   return context;
 };
