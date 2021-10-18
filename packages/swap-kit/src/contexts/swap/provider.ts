@@ -5,6 +5,7 @@ import { createContainer } from "unstated-next";
 
 import { SRM_MINT, USDC_MINT } from "../../constants";
 import { FEE_MULTIPLIER } from "../dex";
+import { useMint } from "../token";
 import { _useSwapFair } from "./hooks";
 
 const DEFAULT_SLIPPAGE_PERCENT = 0.5;
@@ -79,6 +80,9 @@ const useSwapInternal = (props: UseSwapArgs = {}): UseSwap => {
   const fair = _useSwapFair(fromMint, toMint, fairOverride);
   const referral = props.referral;
 
+  const fromMintInfo = useMint(fromMint);
+  const toMintInfo = useMint(toMint);
+
   assert.ok(slippage >= 0);
 
   const setFromAmount = useCallback(
@@ -89,10 +93,13 @@ const useSwapInternal = (props: UseSwapArgs = {}): UseSwap => {
         return;
       }
 
+      const _toAmount = FEE_MULTIPLIER * (amount / fair);
       _setFromAmount(amount);
-      _setToAmount(FEE_MULTIPLIER * (amount / fair));
+      _setToAmount(
+        toMintInfo ? Number(_toAmount.toFixed(toMintInfo.decimals)) : _toAmount
+      );
     },
-    [fair]
+    [fair, toMintInfo]
   );
 
   useEffect(() => {
@@ -111,18 +118,22 @@ const useSwapInternal = (props: UseSwapArgs = {}): UseSwap => {
         return;
       }
 
+      const _fromMintInfo = (amount * fair) / FEE_MULTIPLIER;
       _setToAmount(amount);
-      _setFromAmount((amount * fair) / FEE_MULTIPLIER);
+      _setFromAmount(
+        fromMintInfo
+          ? Number(_fromMintInfo.toFixed(fromMintInfo.decimals))
+          : _fromMintInfo
+      );
     },
-    [fair]
+    [fair, fromMintInfo]
   );
 
   const swapToFromMints = useCallback(() => {
     const oldFrom = fromMint;
     const oldTo = toMint;
-    const oldToAmount = toAmount;
 
-    _setFromAmount(oldToAmount);
+    _setFromAmount(toAmount);
     setFromMint(oldTo);
     setToMint(oldFrom);
   }, [fromMint, toAmount, toMint]);

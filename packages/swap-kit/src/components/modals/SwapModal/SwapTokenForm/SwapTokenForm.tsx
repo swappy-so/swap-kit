@@ -178,7 +178,16 @@ export const SwapTokenForm: FC<Props> = ({
   };
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let nextAmount = e.target.value
+    let nextAmount = e.target.value;
+
+    if (mintAccount) {
+      nextAmount = nextAmount.replace(
+        new RegExp(`(\\.\\d{${mintAccount.decimals}})\\d+`, "g"),
+        "$1"
+      );
+    }
+
+    nextAmount = nextAmount
       .replace(",", ".")
       .replace(/[^\d.,]/g, "")
       .replace(/^0(\d+)/g, "$1")
