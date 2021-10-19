@@ -2,12 +2,13 @@
   "name": "@swap-so/swap-kit-example",
   "version": "0.0.1",
   "private": true,
-  "description": "Example if swap modal for Solana dApps.",
+  "description": "Example Swap Kit for Solana dApps.",
   "license": "Apache-2.0",
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test"
+    "test": "craco test",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@craco/craco": "^6.3.0",
