@@ -4,8 +4,8 @@
   "description": "Client for swapping on the Serum DEX",
   "homepage": "https://github.com/swappy-so/swap-kit#readme",
   "license": "Apache-2.0",
+  "source": "src/index.ts",
   "main": "lib/index.js",
-  "source": "src/index.js",
   "types": "lib/index.d.ts",
   "engines": {
     "node": ">=10"
@@ -50,5 +50,8 @@
     "not dead",
     "not op_mini all",
     "maintained node versions"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
